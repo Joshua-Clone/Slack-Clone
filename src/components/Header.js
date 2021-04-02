@@ -4,6 +4,8 @@ import { Avatar } from "@material-ui/core";
 import AccessTimeIcon from "@material-ui/icons/AccessTime"; 
 import SearchIcon from "@material-ui/icons/Search"; 
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline"; 
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase';
 
 // Using Style Component instead of CSS 
 // Source: https://styled-components.com/docs/basics#installation
@@ -13,12 +15,16 @@ import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 // Add Material UI in terminal type: "npm install @material-ui/core" & "npm install @material-ui/icons"
 
 function Header () { 
+    const [user] = useAuthState(auth)
+
     return ( 
         <HeaderContainer>
             
             <HeaderLeft>
                 <HeaderAvatar 
-                    // ToDo: Add onClick
+                    onClick={() => auth.signOut()}
+                    src={user?.photoURL}
+                    alt={user?.displayName}
                 />
                 <AccessTimeIcon />
             </HeaderLeft>
